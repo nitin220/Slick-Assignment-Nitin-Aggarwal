@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10be5668-40b2-400e-a3c0-a2c1645eb972" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/DependentRepo.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/DependentRepo.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/EmployeeRepo.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/EmployeeRepo.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/ProjectRepo.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/ProjectRepo.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.sbt" afterPath="$PROJECT_DIR$/build.sbt" />
     </list>
     <ignored path="Slick-Assignment.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,18 +39,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EmployeeTable.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/com/knoldus/mapping/EmployeeTable.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="96" />
-              <folding>
-                <element signature="e#29#70#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="application.conf" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
           <provider selected="true" editor-type-id="text-editor">
@@ -104,14 +91,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EmployeeRepo.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EmployeeRepo.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/knoldus/repo/EmployeeRepo.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.365625">
+            <state vertical-scroll-proportion="0.0">
               <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
               <folding>
                 <element signature="e#26#104#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.sbt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build.sbt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.50625">
+              <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -163,7 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/main/resources/application.conf" />
         <option value="$PROJECT_DIR$/src/main/scala/com/knoldus/connection/DBComponent.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/knoldus/connection/PostGraceComponent.scala" />
@@ -183,6 +179,7 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/DependentRepo.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/EmployeeRepo.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/knoldus/repo/ProjectRepo.scala" />
+        <option value="$PROJECT_DIR$/build.sbt" />
       </list>
     </option>
   </component>
@@ -747,7 +744,7 @@
     </recent_temporary>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1489467958308" />
+    <option name="lastUpdateTimestamp" value="1489468803791" />
     <option name="availableProjects">
       <map>
         <entry>
@@ -806,7 +803,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1301" height="744" extended-state="7" />
+    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1003,13 +1000,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/knoldus/connection/DBComponent.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1141,11 +1131,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/knoldus/repo/EmployeeRepo.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.365625">
+        <state vertical-scroll-proportion="0.0">
           <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
           <folding>
             <element signature="e#26#104#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.sbt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50625">
+          <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
