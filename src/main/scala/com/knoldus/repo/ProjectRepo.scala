@@ -1,13 +1,13 @@
 package com.knoldus.repo
 
-import com.knoldus.connection.{DBComponent, PostgresComponent}
+import com.knoldus.connection.{MySqlComponent, DBComponent, PostgresComponent}
 import com.knoldus.mapping.ProjectTable
 import com.knoldus.model.{Employee, Project}
 
 import scala.concurrent.Future
 
 
-class ProjectRepo extends ProjectTable with PostgresComponent {
+class ProjectRepo extends ProjectTable with MySqlComponent {
 
   this: DBComponent =>
 
