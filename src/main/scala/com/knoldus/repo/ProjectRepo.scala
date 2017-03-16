@@ -1,13 +1,13 @@
 package com.knoldus.repo
 
 import com.knoldus.connection.{MySqlComponent, DBComponent, PostgresComponent}
-import com.knoldus.mapping.ProjectTable
+import com.knoldus.mapping.{EmployeeTable, ProjectTable}
 import com.knoldus.model.{Employee, Project}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 
-class ProjectRepo extends ProjectTable with MySqlComponent {
+trait ProjectRepo extends ProjectTable with EmployeeTable {
 
   this: DBComponent =>
 
@@ -25,6 +25,39 @@ class ProjectRepo extends ProjectTable with MySqlComponent {
 
   def insert(proj: Project): Future[Int] = db.run {
     projectTableQuery += proj
+  }
+
+  /*
+  * inserting a record and returning Id of inserted record
+  * */
+
+  def insertReturningId(newProject: Project): Future[Int] =  {
+    val action=projectTableAutoInc += newProject
+    db.run(action)
+  }
+
+  /*
+  * inserting a record and returning inserted record
+  * */
+
+  def insertReturningObject(newProject: Project): Future[Project] =  {
+    val action=projectTableObject +=newProject
+    db.run(action)
+  }
+
+  /*
+  * inserting multiple records in sequence
+  * */
+
+  def insertMultiple(proj: Project, proj2: Project): Future[List[Int]] = {
+    val action1: DBIO[Int] = projectTableQuery += proj
+    val action2: DBIO[Int] = projectTableQuery += proj2
+   /* val a4: DBIO[List[Int]] = DBIO.sequence(List(action1, action2)).cleanUp{
+      case Some(_)=>projectTableQuery.schema.truncate
+      case None => projectTableQuery.to[List].result
+    }*/
+    val query: DBIO[List[Int]] = DBIO.sequence(List(action1, action2)).transactionally
+    db.run(query)
   }
 
   /*
@@ -70,7 +103,6 @@ class ProjectRepo extends ProjectTable with MySqlComponent {
 
   def upsert(project: Project): Future[Int] = {
     val query = projectTableQuery.insertOrUpdate(project)
-    projectTableQuery += project
     db.run(query)
   }
 
@@ -83,22 +115,46 @@ class ProjectRepo extends ProjectTable with MySqlComponent {
   }
 
   /*
-  * Retrieving the Project details along with Employee details
+  * Retrieving the Project details along with Employee name
   * */
 
-  def getProjectWithEmployee: Future[List[(Employee, Project)]] = db.run {
+  def getProjectWithEmployee: Future[List[(String, String)]] = db.run {
     (for {
       record <- projectTableQuery
       employee <- record.employeeProjectFK
-    } yield (employee, record)).to[List].result
+    } yield (employee.name, record.name)).to[List].result
   }
 
   /*
-  * Retrieving the Project details associated with the given Employee id
+  * Retrieving the Project name associated with the given Employee id
   * */
 
-  def getAllProjectForGivenEmployee(employeeId: Int): Future[List[Project]] = db.run {
-    projectTableQuery.filter(_.empId === employeeId).to[List].result
+  def getAllProjectForGivenEmployee(employeeId: Int): Future[List[String]] = db.run {
+    projectTableQuery.filter(_.empId === employeeId).map(_.name).to[List].result
+  }
+
+  /*
+  *using join on project and employee
+  * */
+
+  def getProjectWithEmployeeNames: Future[List[(String, String)]] = {
+    val action = {
+      for {
+        (proj,emp) <- projectTableQuery join employeeTableQuery on (_.empId === _.id)
+      } yield (proj.name, emp.name)
+    }.to[List].result
+    db.run(action)
+  }
+
+  /*
+ *Inserting record using "Plain Sql"
+ * */
+  def insertWithPlainSql: Future[Int] = {
+    val action = sqlu"insert into project values(10,'carbondata',2,10,'anmol');"
+    db.run(action)
+
   }
 
 }
+
+object ProjectRepo extends PostgresComponent

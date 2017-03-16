@@ -27,4 +27,6 @@ trait ProjectTable extends EmployeeTable {
 
   protected def projectTableAutoInc = projectTableQuery returning projectTableQuery.map(_.projId)
 
+  protected def projectTableObject = projectTableQuery returning projectTableQuery.map(identity)
+
 }

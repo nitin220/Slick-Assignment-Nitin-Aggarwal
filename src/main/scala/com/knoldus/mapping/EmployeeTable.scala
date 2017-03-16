@@ -23,4 +23,6 @@ trait EmployeeTable {
 
   protected def employeeTableAutoInc = employeeTableQuery returning employeeTableQuery.map(_.id)
 
+  protected def employeeTableObject = employeeTableQuery returning employeeTableQuery.map(identity)
+
 }

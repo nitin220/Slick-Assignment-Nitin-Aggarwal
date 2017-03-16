@@ -28,4 +28,6 @@ trait DependentTable extends EmployeeTable {
 
   protected def dependentTableAutoInc = dependentTableQuery returning dependentTableQuery.map(_.id)
 
+  protected def dependentTableObject = dependentTableQuery returning dependentTableQuery.map(identity)
+
 }

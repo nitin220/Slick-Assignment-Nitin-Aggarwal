@@ -1,13 +1,13 @@
 package com.knoldus.repo
 
-import com.knoldus.connection.{MySqlComponent, PostgresComponent, DBComponent}
-import com.knoldus.mapping.EmployeeTable
+import com.knoldus.connection.{PostgresComponent, DBComponent}
+import com.knoldus.mapping.{DependentTable, ProjectTable, EmployeeTable}
 import com.knoldus.model.Employee
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 
-class EmployeeRepo extends EmployeeTable with MySqlComponent {
+trait EmployeeRepo extends EmployeeTable with DependentTable{
 
   this: DBComponent =>
 
@@ -27,6 +27,38 @@ class EmployeeRepo extends EmployeeTable with MySqlComponent {
     employeeTableQuery += newEmployee
   }
 
+
+  /*
+  * inserting a record and returning Id of inserted record
+  * */
+
+  def insertReturningId(newEmployee: Employee): Future[Int] =  {
+    val action=employeeTableAutoInc += newEmployee
+    db.run(action)
+  }
+
+  /*
+  * inserting a record and returning inserted record
+  * */
+
+  def insertReturningObject(newEmployee: Employee): Future[Employee] =  {
+   val action=employeeTableObject+=newEmployee
+    db.run(action)
+  }
+
+  /*
+  * inserting multiple records in sequence
+  * */
+
+  def insertMultiple(newEmployee: Employee,newEmp2:Employee): Future[Int] = {
+    val action1:DBIO[Int]=employeeTableQuery += newEmployee
+    val action2:DBIO[Int]=employeeTableQuery += newEmp2
+    //val a4: DBIO[List[Int]] = DBIO.sequence(List(action1, action2)).cleanUp(x=>action1)
+    val query=action1.andThen(action2).transactionally
+    //db.run(a4)
+    db.run(query)
+  }
+
   /*
   * deleting a record on the basis of experience
   * */
@@ -44,6 +76,7 @@ class EmployeeRepo extends EmployeeTable with MySqlComponent {
     val query = employeeTableQuery.filter(_.id === id).delete
     db.run(query)
   }
+
 
   /*
   * deleting a record on the basis of Name
@@ -78,7 +111,7 @@ class EmployeeRepo extends EmployeeTable with MySqlComponent {
 
   def upsert(employee: Employee): Future[Int] = {
     val query = employeeTableQuery.insertOrUpdate(employee)
-    employeeTableQuery += employee
+
     db.run(query)
   }
 
@@ -100,5 +133,30 @@ class EmployeeRepo extends EmployeeTable with MySqlComponent {
     db.run(query)
   }
 
+/*
+  *using join on dependents and employee
+  * */
+  def namesOfDependentWithEmployees: Future[List[(String, String)]] = {
+    val action = {
+      for {
+        (emp, dep) <- employeeTableQuery join dependentTableQuery on (_.id === _.empId)
+      } yield (emp.name, dep.name)
+    }.to[List].result
+    db.run(action)
+  }
+
+ /*
+ *Inserting record using "Plain Sql"
+ * */
+  def insertWithPlainSql: Future[Int] = {
+    val action = sqlu"insert into employee values(102, 'anmol', 5);"
+    db.run(action)
+
+  }
 
 }
+
+object EmployeeRepo extends EmployeeRepo  with PostgresComponent
+
+
+
